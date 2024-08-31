@@ -28,8 +28,9 @@ const Products = ({ product }) => {
             />
           </div>
           <p className="text-xl font-semibold text-teal-800 mb-4">
-            ${product.price.toFixed(2)}
+            {`Price: $${product.price.toFixed(2)}`}
           </p>
+
           <button className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-full transition duration-300 shadow-md">
             Buy Now
           </button>
