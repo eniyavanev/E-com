@@ -13,10 +13,12 @@ export default {
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
         'lora': ['Lora', 'serif']
-      }
+      },
+      scrollbar: ['rounded'],
     },
   },
   plugins: [
     require('daisyui'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
   ],
 }

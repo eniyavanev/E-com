@@ -5,6 +5,7 @@ import { FaHome } from "react-icons/fa";
 import { useGetProductByIdQuery } from "../../StateManagement/Slices/productSlice";
 import { addToCart } from "../../StateManagement/Slices/cartSlice";
 import { useDispatch } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 
 const productsProduct = () => {
   const { id } = useParams();
@@ -15,7 +16,18 @@ const productsProduct = () => {
 
   const dispatch = useDispatch();
   const addProductToCart = () => {
-    dispatch(addToCart({ qty }));
+    dispatch(addToCart({ ...products, qty }));
+    toast.success("Product added to cart.", {
+      style: {
+        border: "1px solid #0000ff",
+        padding: "16px",
+        color: "#52327a",
+      },
+      iconTheme: {
+        primary: "#0000ff",
+        secondary: "#FFFAEE",
+      },
+    });
   };
 
   return (
@@ -40,7 +52,9 @@ const productsProduct = () => {
           <h1 className="text-3xl font-extrabold mb-4 text-teal-800">
             {products?.name}
           </h1>
-          <p className="text-gray-700 text-base mb-4">{products?.description}</p>
+          <p className="text-gray-700 text-base mb-4">
+            {products?.description}
+          </p>
           <p className="text-lg font-medium mb-4 text-teal-700">
             Category: {products?.category}
           </p>
@@ -58,23 +72,17 @@ const productsProduct = () => {
           </p>
 
           {products?.countInStock > 0 && (
-  <select
-    onChange={(e) => setQty(Number(e.target.value))}
-    className="border border-teal-600 py-2 px-4 rounded-md mb-4 outline-none cursor-pointer hover:bg-teal-50"
-  >
-    {[...Array(products?.countInStock).keys()].map((x) => (
-      <option
-        key={x + 1}
-        value={x + 1}
-        onMouseEnter={(e) => (e.target.style.backgroundColor = "#d1fae5")} // Hover color
-        onMouseLeave={(e) => (e.target.style.backgroundColor = "white")} // Default color
-      >
-        {x + 1}
-      </option>
-    ))}
-  </select>
-)}
-
+            <select
+              onChange={(e) => setQty(Number(e.target.value))}
+              className="border border-teal-600 py-2 px-4 rounded-md mb-4 outline-none cursor-pointer hover:bg-teal-50"
+            >
+              {[...Array(products?.countInStock).keys()].map((x) => (
+                <option key={x + 1} value={x + 1}>
+                  {x + 1}
+                </option>
+              ))}
+            </select>
+          )}
 
           <p
             className={`text-lg font-semibold mb-6 ${
@@ -87,7 +95,9 @@ const productsProduct = () => {
           <button
             onClick={addProductToCart}
             className={`bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ${
-              products?.countInStock === 0 ? "opacity-50 cursor-not-allowed" : ""
+              products?.countInStock === 0
+                ? "opacity-50 cursor-not-allowed"
+                : ""
             }`}
             disabled={products?.countInStock === 0}
           >

@@ -1,32 +1,60 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { BsFillCartFill } from "react-icons/bs";
 
 const Header = () => {
+  const { cart } = useSelector((state) => state.cart);
+
   return (
-    <div className="navbar bg-slate-600 font-poppins">
-      <div className="flex-1">
-        <a className="btn btn-ghost text-xl text-white">E-Commerce</a>
-      </div>
-      <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Link</a>
-          </li>
-          <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="bg-base-100 rounded-t-none p-2">
-                <li>
-                  <a>Link 1</a>
-                </li>
-                <li>
-                  <a>Link 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <header className="sticky top-0 z-10 bg-gradient-to-r from-teal-900 to-blue-900 text-white shadow-lg">
+      <nav className="container mx-auto flex items-center justify-between p-4">
+        <div className="flex items-center">
+          <Link
+            to="/"
+            className="text-3xl font-extrabold hover:text-gray-200 transition duration-300"
+          >
+            E-Commerce
+          </Link>
+        </div>
+        <div className="flex items-center space-x-6" title="Cart Page">
+          <Link
+            to="/cart"
+            className="relative text-lg font-medium hover:text-gray-200 transition duration-300"
+          >
+           <BsFillCartFill />
+            {cart?.cartItems?.length > 0 && (
+              <span className="absolute top-[-10px] right-[-16px] inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-600 rounded-full">
+                {cart.cartItems.length}
+              </span>
+            )}
+          </Link>
+          <details className="relative">
+            <summary className="cursor-pointer text-lg font-medium hover:text-gray-200 transition duration-300">
+              More
+            </summary>
+            <ul className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg border border-gray-200">
+              <li>
+                <Link
+                  to="/link1"
+                  className="block px-4 py-2 hover:bg-gray-100 transition duration-300"
+                >
+                  Link 1
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/link2"
+                  className="block px-4 py-2 hover:bg-gray-100 transition duration-300"
+                >
+                  Link 2
+                </Link>
+              </li>
+            </ul>
+          </details>
+        </div>
+      </nav>
+    </header>
   );
 };
 

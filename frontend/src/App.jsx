@@ -8,6 +8,7 @@ import {
 import MainBody from "./Components/MainBody/MainBody";
 import Home from "./Pages/Home/Home";
 import SingleProduct from "./Pages/SingleProduct/SingleProduct";
+import Cart from "./Pages/Cart/Cart";
 
 const App = () => {
   // const router = createBrowserRouter([
@@ -27,6 +28,7 @@ const App = () => {
       <Route path="/" element={<MainBody />}>
         <Route index={true} element={<Home />} />
         <Route path="/product/:id" element={<SingleProduct />} />
+        <Route path="/Cart" element={<Cart />} />
       </Route>
     )
   );
