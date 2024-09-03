@@ -9,14 +9,19 @@ import toast, { Toaster } from "react-hot-toast";
 
 const productsProduct = () => {
   const { id } = useParams();
+  //console.log(id);
+  
   const { data: product } = useGetProductByIdQuery(id);
 
   const products = product?.product;
+  //console.log(products);
+  
   const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
   const addProductToCart = () => {
     dispatch(addToCart({ ...products, qty }));
+    //toast
     toast.success("Product added to cart.", {
       style: {
         border: "1px solid #0000ff",
@@ -74,6 +79,7 @@ const productsProduct = () => {
           {products?.countInStock > 0 && (
             <select
               onChange={(e) => setQty(Number(e.target.value))}
+              value={qty}
               className="border border-teal-600 py-2 px-4 rounded-md mb-4 outline-none cursor-pointer hover:bg-teal-50"
             >
               {[...Array(products?.countInStock).keys()].map((x) => (
@@ -83,7 +89,7 @@ const productsProduct = () => {
               ))}
             </select>
           )}
-
+            
           <p
             className={`text-lg font-semibold mb-6 ${
               products?.countInStock > 0 ? "text-green-600" : "text-red-600"

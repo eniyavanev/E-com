@@ -14,7 +14,14 @@ const importData = async () => {
     await User.deleteMany();
 
     const createdUsers = await User.insertMany(users);
-    const sampleProducts = await Product.insertMany(products);
+    const adminUser = createdUsers[0]._id;
+    const sampleProducts = products.map((product) => {
+      return { ...product, user: adminUser };
+    });
+
+    await Product.insertMany(sampleProducts);
+    //const sampleProducts = await Product.insertMany(products);
+
     console.log("Data Imported");
     process.exit();
   } catch (error) {

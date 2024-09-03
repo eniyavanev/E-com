@@ -2,13 +2,18 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./Config/db.js";
 import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js"
 import { notFound, errorHandler } from "./middleware/errorMiddler.js";
+import dotenv from "dotenv";
+dotenv.config();
+const port = process.env.PORT || 5000;
+
 
 const app = express();
-const port = 5000;
+
 
 // Connect to MongoDB
-connectDB(port);
+connectDB(process.env.PORT);
 
 //Enable CORS
 app.use(cors());
@@ -19,6 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", productRoutes);
+app.use("/api/users", userRoutes);
 
 app.use(notFound);
 //app.use(errorHandler);
