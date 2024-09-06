@@ -2,23 +2,25 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./Config/db.js";
 import productRoutes from "./routes/productRoutes.js";
-import userRoutes from "./routes/userRoutes.js"
+import userRoutes from "./routes/userRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddler.js";
 import dotenv from "dotenv";
 dotenv.config();
-const port = process.env.PORT || 5000;
 
 
 const app = express();
 
-
 // Connect to MongoDB
-connectDB(process.env.PORT);
+connectDB();
 
 //Enable CORS
 app.use(cors());
-//app.use(express.json());
+//parse requests of content-type - application/json
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+//port
+const port = process.env.PORT ;
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
