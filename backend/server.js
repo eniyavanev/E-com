@@ -5,6 +5,7 @@ import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddler.js";
 import dotenv from "dotenv";
+import products from  "./data/products.js";
 dotenv.config();
 
 
@@ -24,6 +25,9 @@ const port = process.env.PORT ;
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+app.get("/api/products", (req, res) => {
+  res.json(products);
+})
 
 app.use("/api", productRoutes);
 app.use("/api/users", userRoutes);
